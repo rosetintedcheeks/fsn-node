@@ -1,0 +1,11 @@
+{
+    "clientId": "798061576988917801",
+    "guildId": "293866901464023041",
+    "token": "Nzk4MDYxNTc2OTg4OTE3ODAx.X_viww.BPzUyUFySU53gpunHxTXt1dASw4",
+    "database": {
+        "socketPath": "/run/mysqld/mysqld.sock",
+        "user"      : "laravel",
+        "password"  : "Md188RRlvSRcOZJyMOGVCMuw",
+        "database"  : "sac"
+    }
+}
