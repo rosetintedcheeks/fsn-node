@@ -73,7 +73,7 @@ client.on('messageCreate', async (message) => {
 								voiceConnection.destroy();
 							}
 						});
-						const resource = createAudioResource('/srv/http/storage/app/public/' + results[0].location);
+						const resource = createAudioResource('/srv/laravel/the-mega-site/storage/app/public/' + results[0].location);
 						player.play(resource);
 					}
 				});
@@ -115,7 +115,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
 						}
 					}
 				});
-				const resource = createAudioResource('/srv/http/storage/app/public/' + result.location);
+				const resource = createAudioResource('/srv/laravel/the-mega-site/storage/app/public/' + result.location);
 				player.play(resource);
 			}
 		});
@@ -138,16 +138,20 @@ client.on('interactionCreate', async interaction => {
 });
 
 scheduleJob('*/5 * * * *', function() {
-	const query = pool.query('SELECT id, request_name, filled, announced FROM requests', function (error, results, fields) {
+	const query = pool.query('SELECT id, request_name, filled, announced, discord_id FROM requests', function (error, results, fields) {
 		const channel = client.channels.cache.get(guild_config[0].announce_channel);
 		results.forEach(function(v) {
 			if(v.filled == 1 && v.announced == 0) {
 				// announce
-				channel.send(inlineCode(v.request_name) + ' is on the server.');
+				channel.send(`<@${v.discord_id}> ${inlineCode(v.request_name)} is on the server.`);
 				const insertQuery = pool.query('UPDATE requests SET announced = 1 WHERE id = ?', v.id);
 			}
 		});
 	});
+	//const voiceConnection = getVoiceConnection(message.guild.id);
+	//guild_config.forEach(function(v) {
+		//client.
+	//}
 	//guild_config.forEach(function(v) {
 		//const channel = client.channels.cache.get(v.announce_channel); // god i'm an idiot this doesn't actually work need a guild column in requests some day
 		//channel.send('content');

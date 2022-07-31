@@ -27,8 +27,9 @@ module.exports = {
 			if (error) throw error;
 			request_id = results.insertId;
 		});
-		const name = inlineCode(request.request_name);
-		const message = await interaction.reply({content :'You have requested ' + name + '.', fetchReply: true});
+		const request_name = inlineCode(request.request_name);
+		const name = interaction.member.user;
+		const message = await interaction.reply({content :`${name} has requested ${request_name}.`, fetchReply: true});
 		connection.end();
 
 /*
