@@ -73,7 +73,7 @@ client.on('messageCreate', async (message) => {
 								voiceConnection.destroy();
 							}
 						});
-						const resource = createAudioResource('/srv/laravel/the-mega-site/storage/app/public/' + results[0].location);
+						const resource = createAudioResource('/srv/the-mega-site/storage/app/public/' + results[0].location);
 						player.play(resource);
 					}
 				});
@@ -115,7 +115,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
 						}
 					}
 				});
-				const resource = createAudioResource('/srv/laravel/the-mega-site/storage/app/public/' + result.location);
+				const resource = createAudioResource('/srv/the-mega-site/storage/app/public/' + result.location);
 				player.play(resource);
 			}
 		});

@@ -3,7 +3,7 @@ while true
 do 
     echo "STARTING...."
     #./bot.py
-    cd ~/tiktok/nodebot
+    cd ~/nodebot
     node index.js
     sleep 5
 done
