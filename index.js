@@ -26,6 +26,12 @@ client.once('ready', () => {
 const pool = mysql.createPool(database);
 const player = createAudioPlayer();
 
+/*
+let last_played = Date.now(); // should hold when a sound was last played
+const leave_after = ; // how long since a sound has been played should we stay
+// TODO: move to config? and finish this
+*/
+
 
 var guild_config = [];
 const query = pool.query('SELECT guild, announce_channel FROM guild_config', function (error, results, fields) {
@@ -156,6 +162,17 @@ scheduleJob('*/5 * * * *', function() {
 		//const channel = client.channels.cache.get(v.announce_channel); // god i'm an idiot this doesn't actually work need a guild column in requests some day
 		//channel.send('content');
 	//});
+});
+
+scheduleJob('*/1 * * * *', function() {
+    // if the bot is the only member, it should leave
+	const voiceConnection = getVoiceConnection(guild_config[0].guild);
+    if(!voiceConnection) return;
+    const channel = client.channels.cache.get(voiceConnection.joinConfig.channelId);
+    if(!channel) return;
+	if(channel.members.size === 1) {
+        voiceConnection.disconnect();
+    }
 });
 
 process.on('beforeExit', () => {
